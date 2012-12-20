@@ -41,13 +41,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DelegateDecompiler">
-      <HintPath>..\packages\DelegateDecompiler.0.6.0.0\lib\net40-Client\DelegateDecompiler.dll</HintPath>
+      <HintPath>..\..\..\Consensus\packages\DelegateDecompiler.0.6.0.0\lib\net40-Client\DelegateDecompiler.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Reflection">
-      <HintPath>..\packages\Mono.Reflection.1.0.0.0\lib\Mono.Reflection.dll</HintPath>
+      <HintPath>..\..\..\Consensus\packages\Mono.Reflection.1.0.0.0\lib\Mono.Reflection.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\..\Consensus\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -74,6 +74,21 @@
   <ItemGroup>
     <Compile Include="Binding\KnockoutBingindComplexItem.cs" />
     <Compile Include="Binding\KnockoutBindingStringItem.cs" />
+    <Compile Include="Extensions\KnockoutContextExtensions.cs" />
+    <Compile Include="Extensions\KnockoutHtmlHelperExtensions.cs" />
+    <Compile Include="Html\KnockoutBindingApplier.cs" />
+    <Compile Include="Html\KnockoutFormElements\Base\KnockoutTextInputBase.cs" />
+    <Compile Include="Html\KnockoutFormElements\Base\KnockoutFieldBase.cs" />
+    <Compile Include="Html\KnockoutFormElements\Base\KnockoutCheckedInputBase.cs" />
+    <Compile Include="Html\KnockoutFormElements\KnockoutRadioButton.cs" />
+    <Compile Include="Html\KnockoutFormElements\KnockoutHidden.cs" />
+    <Compile Include="Html\KnockoutFormElements\KnockoutCheckBox.cs" />
+    <Compile Include="Html\KnockoutFormElements\KnockoutCkeditor.cs" />
+    <Compile Include="Html\KnockoutFormElements\Base\KnockoutInputBase.cs" />
+    <Compile Include="Html\KnockoutFormElements\KnockoutPassword.cs" />
+    <Compile Include="Html\KnockoutFormElements\KnockoutTextArea.cs" />
+    <Compile Include="Html\KnockoutFormElements\KnockoutTextBox.cs" />
+    <Compile Include="Html\KnockoutHtmlElements\KnockoutHtmlTagBase.cs" />
     <Compile Include="SubContexts\KnockoutCommonRegionContext.cs" />
     <Compile Include="SubContexts\KnockoutIfContext.cs" />
     <Compile Include="SubContexts\KnockoutWithContext.cs" />
@@ -115,6 +130,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\eqip.framework\eqip.core\eqip.core.csproj">
+      <Project>{627F0C66-7B5A-4525-B0D1-7A16741C6531}</Project>
+      <Name>eqip.core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
