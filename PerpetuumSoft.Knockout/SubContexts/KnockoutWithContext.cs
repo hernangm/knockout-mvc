@@ -4,11 +4,12 @@ namespace PerpetuumSoft.Knockout
 {
   public class KnockoutWithContext<TModel> : KnockoutCommonRegionContext<TModel>
   {
-    public KnockoutWithContext(ViewContext viewContext, string expression) : base(viewContext, expression)
+    public KnockoutWithContext(ViewContext viewContext, string expression, TModel model) : base(viewContext, expression)
     {
+        this.model = model;
     }
 
-    protected override string Keyword
+    public override string Keyword
     {
       get
       {

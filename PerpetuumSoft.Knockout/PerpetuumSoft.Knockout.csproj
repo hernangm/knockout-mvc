@@ -74,12 +74,20 @@
   <ItemGroup>
     <Compile Include="Binding\KnockoutBingindComplexItem.cs" />
     <Compile Include="Binding\KnockoutBindingStringItem.cs" />
+    <Compile Include="Decorators\KnockoutFunctionAttribute.cs" />
+    <Compile Include="Decorators\KnockoutBaseAttribute.cs" />
+    <Compile Include="Decorators\KnockoutComputedAttribute.cs" />
+    <Compile Include="Decorators\KnockoutReferenceAttribute.cs" />
     <Compile Include="Extensions\KnockoutContextExtensions.cs" />
+    <Compile Include="Extensions\KnockoutHtmlExtensions.cs" />
     <Compile Include="Extensions\KnockoutHtmlHelperExtensions.cs" />
     <Compile Include="Html\KnockoutBindingApplier.cs" />
+    <Compile Include="Html\KnockoutFormElements\Base\KnockoutSelectBase.cs" />
     <Compile Include="Html\KnockoutFormElements\Base\KnockoutTextInputBase.cs" />
     <Compile Include="Html\KnockoutFormElements\Base\KnockoutFieldBase.cs" />
     <Compile Include="Html\KnockoutFormElements\Base\KnockoutCheckedInputBase.cs" />
+    <Compile Include="Html\KnockoutFormElements\KnockoutDropDownList.cs" />
+    <Compile Include="Html\KnockoutFormElements\KnockoutListBox.cs" />
     <Compile Include="Html\KnockoutFormElements\KnockoutRadioButton.cs" />
     <Compile Include="Html\KnockoutFormElements\KnockoutHidden.cs" />
     <Compile Include="Html\KnockoutFormElements\KnockoutCheckBox.cs" />
@@ -88,7 +96,7 @@
     <Compile Include="Html\KnockoutFormElements\KnockoutPassword.cs" />
     <Compile Include="Html\KnockoutFormElements\KnockoutTextArea.cs" />
     <Compile Include="Html\KnockoutFormElements\KnockoutTextBox.cs" />
-    <Compile Include="Html\KnockoutHtmlElements\KnockoutHtmlTagBase.cs" />
+    <Compile Include="Html\KnockoutHtmlElements\Base\KnockoutHtmlTagBase.cs" />
     <Compile Include="SubContexts\KnockoutCommonRegionContext.cs" />
     <Compile Include="SubContexts\KnockoutIfContext.cs" />
     <Compile Include="SubContexts\KnockoutWithContext.cs" />
@@ -102,7 +110,6 @@
     <Compile Include="Binding\KnockoutBinding.cs" />
     <Compile Include="Binding\KnockoutBindingItem.cs" />
     <Compile Include="Utilities\KnockoutExpressionData.cs" />
-    <Compile Include="Utilities\KnockoutExtensions.cs" />
     <Compile Include="SubContexts\KnockoutForeachContext.cs" />
     <Compile Include="Html\KnockoutHtml.cs" />
     <Compile Include="SubContexts\KnockoutRegionContext.cs" />
@@ -110,6 +117,7 @@
     <Compile Include="Utilities\KnockoutJsModelBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\KnockoutUtilities.cs" />
+    <Compile Include="Views\KnockoutViewPage.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -135,6 +143,10 @@
     <ProjectReference Include="..\..\..\eqip.framework\eqip.core\eqip.core.csproj">
       <Project>{627F0C66-7B5A-4525-B0D1-7A16741C6531}</Project>
       <Name>eqip.core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\eqip.framework\eqip.metadata\eqip.metadata.csproj">
+      <Project>{5225340D-D210-4A17-A7E8-5AD8F3DCC431}</Project>
+      <Name>eqip.metadata</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

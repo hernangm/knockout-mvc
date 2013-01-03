@@ -3,26 +3,34 @@ using System.Web.Mvc;
 
 namespace PerpetuumSoft.Knockout
 {
-  public abstract class KnockoutCommonRegionContext<TModel> : KnockoutRegionContext<TModel>   
-  {
-    protected string Expression { get; set; }    
-
-    public KnockoutCommonRegionContext(ViewContext viewContext, string expression)
-      :base(viewContext)
+    public abstract class KnockoutCommonRegionContext<TModel> : KnockoutRegionContext<TModel>
     {
-      Expression = expression;      
-    }
+        protected string Expression { get; set; }
 
-    public override void WriteStart(TextWriter writer)
-    {
-      writer.WriteLine(string.Format(@"<!-- ko {0}: {1} -->", Keyword, Expression));
-    }
+        public KnockoutCommonRegionContext(ViewContext viewContext, string expression)
+            : base(viewContext)
+        {
+            Expression = expression;
+        }
 
-    protected override void WriteEnd(TextWriter writer)
-    {
-      writer.WriteLine(@"<!-- /ko -->");     
-    }
+        public override void WriteStart(TextWriter writer)
+        {
+            writer.WriteLine(string.Format(@"<!-- ko {0}: {1} -->", Keyword, Expression));
+        }
 
-    protected abstract string Keyword { get; }
-  }
+        protected override void WriteEnd(TextWriter writer)
+        {
+            writer.WriteLine(@"<!-- /ko -->");
+        }
+
+        public abstract string Keyword { get; }
+
+        public string StackId
+        {
+            get
+            {
+                return this.ContextStack.Count.ToString();
+            }
+        }
+    }
 }

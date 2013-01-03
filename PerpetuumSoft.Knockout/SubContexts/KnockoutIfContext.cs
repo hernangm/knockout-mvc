@@ -8,7 +8,7 @@ namespace PerpetuumSoft.Knockout
     {
     }
 
-    protected override string Keyword
+    public override string Keyword
     {
       get
       {

@@ -16,8 +16,8 @@ namespace PerpetuumSoft.Knockout.Html
         private static string patron = "var {0} = new {1}({2}); ko.applyBindings({0}{3});";
         private static string later = "$(function() {{ {0} }})</script>";
         private ViewContext ViewContext { get; set; }
-        private object _Model { get; set; }
-        private IEnumerable<ModelValidator> _ModelMetadata { get; set; }
+        public object Model { get; private set; }
+        //private IEnumerable<ModelMetadata> _ModelMetadata { get; set; }
         private string _VariableName { get; set; }
         private string _To { get; set; }
         private string _Scope { get; set; }
@@ -27,8 +27,8 @@ namespace PerpetuumSoft.Knockout.Html
         public KnockoutBindingApplier(ViewContext context)
         {
             this.ViewContext = context;
-            this._Model = this.ViewContext.ViewData.Model;
-            this._ModelMetadata = this.ViewContext.ViewData.ModelMetadata.GetValidators(this.ViewContext.Controller.ControllerContext);
+            this.Model = this.ViewContext.ViewData.Model;
+            //this._ModelMetadata = this.ViewContext.ViewData.ModelMetadata.Properties;
             this._AdditionalParameters = new List<object>();
         }
 
@@ -37,7 +37,7 @@ namespace PerpetuumSoft.Knockout.Html
         /// </summary>
         public KnockoutBindingApplier WithModel(object model)
         {
-            this._Model = model;
+            this.Model = model;
             return this;
         }
 
@@ -59,11 +59,17 @@ namespace PerpetuumSoft.Knockout.Html
             return this;
         }
 
-        public KnockoutBindingApplier WithMetadata(object metadata)
-        {
-            //this._ModelMetadata = metadata;
-            return this;
-        }
+        //public KnockoutBindingApplier WithMetadata()
+        //{
+        //    this._ModelMetadata = this.ViewContext.ViewData.ModelMetadata;
+        //    return this;
+        //}
+
+        //public KnockoutBindingApplier WithMetadata(object metadata)
+        //{
+        //    this._ModelMetadata = metadata;
+        //    return this;
+        //}
 
         public KnockoutBindingApplier InScope(string scope)
         {
@@ -86,15 +92,15 @@ namespace PerpetuumSoft.Knockout.Html
         public string ToHtmlString()
         {
             var encodedArguments = new List<string>();
-            if (this._Model != null)
+            if (this.Model != null)
             {
-                encodedArguments.Add(JsonConvert.SerializeObject(this._Model, Formatting.None, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                encodedArguments.Add(JsonConvert.SerializeObject(this.Model, Formatting.None, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
             }
-            if (this._ModelMetadata != null && this._ModelMetadata.Count() > 0)
-            {
-                //var serializedMetadata = MetadataSerializer.Serialize(this._ModelMetadata);
-                //encodedArguments.Add(JsonConvert.SerializeObject(serializedMetadata, Formatting.None, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
-            }
+            //if (this._ModelMetadata != null && this._ModelMetadata.Count() > 0)
+            //{
+            //    //var serializedMetadata = MetadataSerializer.Serialize(this._ModelMetadata);
+            //    //encodedArguments.Add(JsonConvert.SerializeObject(serializedMetadata, Formatting.None, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+            //}
             foreach (var arg in this._AdditionalParameters)
             {
                 encodedArguments.Add(JsonConvert.SerializeObject(arg));
@@ -111,7 +117,7 @@ namespace PerpetuumSoft.Knockout.Html
 
         private string GetFunction()
         {
-            return !string.IsNullOrEmpty(this._To) ? _To : Regex.Replace(this._Model.GetType().Name, "ViewModel$", "");
+            return !string.IsNullOrEmpty(this._To) ? _To : Regex.Replace(this.Model.GetType().Name, "ViewModel$", "");
         }
 
         private string GetVariableName()

@@ -5,6 +5,7 @@ using System.Text;
 using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
+using eqip.metadata.Configurations;
 
 namespace PerpetuumSoft.Knockout.Html
 {
@@ -14,7 +15,7 @@ namespace PerpetuumSoft.Knockout.Html
         bool WrappingLabel();
     }
 
-    public abstract class KnockoutFieldBase<TType, TModel> : KnockoutHtmlTagBase<TType, TModel>, IField where TType : KnockoutFieldBase<TType, TModel>
+    public abstract class KnockoutFieldBase<TType, TModel, TItem> : KnockoutHtmlTagBase<TType, TModel, TItem>, IField where TType : KnockoutFieldBase<TType, TModel, TItem>
     {
         public enum FieldType
         {
@@ -26,8 +27,8 @@ namespace PerpetuumSoft.Knockout.Html
         #region Properties
         private readonly string labelPattern = @"<label for=""{0}"">{1}</label>{2}";
         private FieldType Type { get; set; }
+        protected IEnumerable<IPropertyConfig> Metadata { get; set; }
         protected string Name { get; set; }
-        protected Expression<Func<TModel, object>> Binding { get; set; }
         protected string Label { get; set; }
         protected bool IsValidatable { get; set; }
         protected bool ShowValidationMessage { get; set; }
@@ -36,17 +37,16 @@ namespace PerpetuumSoft.Knockout.Html
         #endregion
 
         #region Constructors
-        public KnockoutFieldBase(KnockoutContext<TModel> context, FieldType type, Expression<Func<TModel, object>> binding, string[] instancesNames = null, Dictionary<string, string> aliases = null)
-            : base(context, instancesNames, aliases)
+        public KnockoutFieldBase(KnockoutContext<TModel> context, FieldType type, Expression<Func<TModel, TItem>> binding, IEnumerable<IPropertyConfig> metadata = null, string[] instancesNames = null, Dictionary<string, string> aliases = null)
+            : base(context, binding, instancesNames, aliases)
         {
             this.Type = type;
-            this.Binding = binding;
+            this.Metadata = metadata;
             this.Name = KnockoutExpressionConverter.Convert(Binding, null);
         }
         #endregion
 
         #region Abstract Methods
-        protected abstract void ConfigureBinding(KnockoutTagBuilder<TModel> tagBuilder);
         public virtual bool WrappingLabel()
         {
             return false;
@@ -98,7 +98,7 @@ namespace PerpetuumSoft.Knockout.Html
                 else
                 {
                     return string.Format(labelPattern, this.GetId(), this.Label, tagBuilder.ToHtmlString());
-                } 
+                }
             }
             return tagBuilder.ToHtmlString();
         }

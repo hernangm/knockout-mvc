@@ -152,10 +152,16 @@ namespace PerpetuumSoft.Knockout
     {
       var sb = new StringBuilder();
       sb.Append("function() {");
-      sb.Append(Context.ServerAction(actionName, controllerName, routeValues));
+      //sb.Append(Context.ServerAction(actionName, controllerName, routeValues));
       sb.Append(";}");
       Items.Add(new KnockoutBindingStringItem(eventName, sb.ToString(), false));
       return this;
+    }
+
+    public KnockoutBinding<TModel> Click(Expression<Func<TModel, object>> binding)
+    {
+        Items.Add(new KnockoutBindingItem<TModel, object> { Name = "click", Expression = binding });
+        return this;
     }
 
     public KnockoutBinding<TModel> Click(string actionName, string controllerName, object routeValues = null)
@@ -174,7 +180,11 @@ namespace PerpetuumSoft.Knockout
       Items.Add(new KnockoutBindingStringItem(name, value));
       return this;
     }
-
+    public KnockoutBinding<TModel> Custom(string name, string value, bool needQuotes)
+    {
+        Items.Add(new KnockoutBindingStringItem(name, value, needQuotes));
+        return this;
+    }
     // *** Common ***
 
     private readonly List<KnockoutBindingItem> items = new List<KnockoutBindingItem>();
