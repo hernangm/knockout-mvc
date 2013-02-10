@@ -21,14 +21,8 @@ namespace PerpetuumSoft.Knockout.Html
             }
         }
 
-        public override bool WrappingLabel()
-        {
-            return true;
-        }
-
         protected override void ConfigureBinding(KnockoutTagBuilder<TModel> tagBuilder)
         {
-            base.ConfigureBinding(tagBuilder);
             tagBuilder.Checked(Binding);
         }
 

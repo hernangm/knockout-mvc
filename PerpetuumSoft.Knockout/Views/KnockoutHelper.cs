@@ -58,16 +58,4 @@ namespace PerpetuumSoft.Knockout.Views
         }
     }
 
-    public abstract class KnockoutViewPage<T> : WebViewPage<T>
-    {
-        public KnockoutHelper<T> Knockout { get; private set; }
-
-        public override void InitHelpers()
-        {
-            base.InitHelpers();
-            Knockout = new KnockoutHelper<T>(this.Html, this);
-        }
-    }
-
-
 }

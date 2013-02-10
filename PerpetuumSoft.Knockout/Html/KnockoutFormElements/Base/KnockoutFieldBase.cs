@@ -1,35 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Linq.Expressions;
+using eqip.metadata.Configurations;
 using System.Web;
 using System.Web.Mvc;
-using eqip.metadata.Configurations;
 
 namespace PerpetuumSoft.Knockout.Html
 {
+    public enum FieldType
+    {
+        Input,
+        TextArea,
+        Select
+    }
+
     public interface IField
     {
         string GetId();
-        bool WrappingLabel();
+        FieldType Type { get; }
+
+    }
+
+    public interface IInput
+    {
+        InputType InputType { get; }
     }
 
     public abstract class KnockoutFieldBase<TType, TModel, TItem> : KnockoutHtmlTagBase<TType, TModel, TItem>, IField where TType : KnockoutFieldBase<TType, TModel, TItem>
     {
-        public enum FieldType
-        {
-            Input,
-            TextArea,
-            Select
-        }
 
         #region Properties
-        private readonly string labelPattern = @"<label for=""{0}"">{1}</label>{2}";
-        private FieldType Type { get; set; }
+        public FieldType Type { get; private set; }
         protected IEnumerable<IPropertyConfig> Metadata { get; set; }
         protected string Name { get; set; }
-        protected string Label { get; set; }
+        protected KnockoutLabel Label { get; set; }
         protected bool IsValidatable { get; set; }
         protected bool ShowValidationMessage { get; set; }
         protected bool IsReadOnly { get; set; }
@@ -42,14 +47,8 @@ namespace PerpetuumSoft.Knockout.Html
         {
             this.Type = type;
             this.Metadata = metadata;
+            this.Label = new KnockoutLabel(this, metadata);
             this.Name = KnockoutExpressionConverter.Convert(Binding, null);
-        }
-        #endregion
-
-        #region Abstract Methods
-        public virtual bool WrappingLabel()
-        {
-            return false;
         }
         #endregion
 
@@ -68,7 +67,7 @@ namespace PerpetuumSoft.Knockout.Html
 
         public TType WithLabel(string label)
         {
-            this.Label = label;
+            this.Label.Text = label;
             return (TType)this;
         }
 
@@ -88,20 +87,26 @@ namespace PerpetuumSoft.Knockout.Html
             var tagBuilder = new KnockoutTagBuilder<TModel>(Context, this.Type.ToString().ToLowerInvariant(), InstanceNames, Aliases);
             this.HtmlAttributes.Add("id", this.GetId());
             tagBuilder.ApplyAttributes(this.HtmlAttributes);
+            this.ConfigureTagBuilder(tagBuilder);
             this.ConfigureBinding(tagBuilder);
-            if (!string.IsNullOrWhiteSpace(this.Label))
+            if (this.Label.MustShow)
             {
-                if (this.WrappingLabel())
+                if (this.Label.WrappingLabel)
                 {
-                    return string.Format(labelPattern, this.GetId(), tagBuilder.ToHtmlString() + this.Label, string.Empty);
+                    return string.Format(this.Label.ToHtmlString(), tagBuilder.ToHtmlString());
                 }
                 else
                 {
-                    return string.Format(labelPattern, this.GetId(), this.Label, tagBuilder.ToHtmlString());
+                    return this.Label.ToHtmlString() + tagBuilder.ToHtmlString();
                 }
             }
-            return tagBuilder.ToHtmlString();
+            else
+            {
+                return tagBuilder.ToHtmlString();
+            }
         }
+
+
 
     }
 }

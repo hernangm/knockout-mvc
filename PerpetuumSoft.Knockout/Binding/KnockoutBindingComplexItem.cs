@@ -3,7 +3,7 @@ using System.Text;
 
 namespace PerpetuumSoft.Knockout
 {
-  public class KnockoutBingindComplexItem : KnockoutBindingItem
+  public class KnockoutBindingComplexItem : KnockoutBindingItem
   {
     private readonly List<KnockoutBindingItem> subItems = new List<KnockoutBindingItem>();
 

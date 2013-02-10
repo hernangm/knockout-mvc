@@ -9,7 +9,7 @@ using eqip.metadata.Configurations;
 namespace PerpetuumSoft.Knockout.Html
 {
 
-    public abstract class KnockoutInputBase<TType, TModel> : KnockoutFieldBase<TType, TModel, object> where TType : KnockoutInputBase<TType, TModel>
+    public abstract class KnockoutInputBase<TType, TModel> : KnockoutFieldBase<TType, TModel, object>, IInput where TType : KnockoutInputBase<TType, TModel>
     {
 
         public InputType InputType { get; private set; }
@@ -20,10 +20,15 @@ namespace PerpetuumSoft.Knockout.Html
             this.InputType = inputType;
         }
 
-        protected override void ConfigureBinding(KnockoutTagBuilder<TModel> tagBuilder)
+        protected override void ConfigureTagBuilder(KnockoutTagBuilder<TModel> tagBuilder)
         {
             tagBuilder.TagRenderMode = TagRenderMode.SelfClosing;
             tagBuilder.ApplyAttributes(new { type = this.InputType.ToString().ToLowerInvariant() });
+        }
+
+        protected override void ConfigureBinding(KnockoutTagBuilder<TModel> tagBuilder)
+        {
+            tagBuilder.Value(Binding);
         }
 
     }

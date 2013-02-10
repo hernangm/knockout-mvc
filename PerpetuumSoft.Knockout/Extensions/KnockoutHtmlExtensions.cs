@@ -49,6 +49,13 @@ namespace PerpetuumSoft.Knockout
         }
         #endregion
 
+        #region DatePickerFor
+        public static KnockoutDatePicker<TModel> DatePickerFor<TModel>(this KnockoutHtml<TModel> html, Expression<Func<TModel, object>> binding)
+        {
+            return new KnockoutDatePicker<TModel>(html.Context, binding, GetMetaDataFor(binding), html.Context.CreateData().InstanceNames, html.Context.CreateData().Aliases);
+        }
+        #endregion
+
         #region CkeditorFor
         public static KnockoutCkeditor<TModel> CkeditorFor<TModel>(this KnockoutHtml<TModel> html, Expression<Func<TModel, object>> binding)
         {

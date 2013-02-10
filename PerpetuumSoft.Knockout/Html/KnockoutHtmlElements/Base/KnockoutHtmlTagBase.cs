@@ -27,6 +27,8 @@ namespace PerpetuumSoft.Knockout.Html
         protected abstract void ConfigureBinding(KnockoutTagBuilder<TModel> tagBuilder);
         #endregion
 
+        protected virtual void ConfigureTagBuilder(KnockoutTagBuilder<TModel> tagBuilder) { }
+
         public TType Attributes(object htmlAttributes)
         {
             this.HtmlAttributes.Merge(HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
