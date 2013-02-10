@@ -51,7 +51,7 @@ namespace PerpetuumSoft.Knockout.Html
         {
             var complexBinding = new KnockoutBindingComplexItem { Name = "datepicker" };
             complexBinding.Add(new KnockoutBindingItem<TModel, object> { Name = "value", Expression = expression });
-            complexBinding.Add(new KnockoutBindingStringItem { Name = "options", Value = JsonConvert.SerializeObject(config)});
+            complexBinding.Add(new KnockoutBindingStringItem("options", JsonConvert.SerializeObject(config), false));
             return complexBinding;
         }
     }

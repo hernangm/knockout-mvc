@@ -26,10 +26,19 @@ namespace PerpetuumSoft.Knockout.Html
 
         public KnockoutBindingApplier(ViewContext context)
         {
+
             this.ViewContext = context;
             this.Model = this.ViewContext.ViewData.Model;
             //this._ModelMetadata = this.ViewContext.ViewData.ModelMetadata.Properties;
             this._AdditionalParameters = new List<object>();
+        }
+
+        private string Serialize(object obj)
+        {
+            return JsonConvert.SerializeObject(obj, Formatting.None, new JsonSerializerSettings {
+                DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
         }
 
         /// <summary>
@@ -59,18 +68,6 @@ namespace PerpetuumSoft.Knockout.Html
             return this;
         }
 
-        //public KnockoutBindingApplier WithMetadata()
-        //{
-        //    this._ModelMetadata = this.ViewContext.ViewData.ModelMetadata;
-        //    return this;
-        //}
-
-        //public KnockoutBindingApplier WithMetadata(object metadata)
-        //{
-        //    this._ModelMetadata = metadata;
-        //    return this;
-        //}
-
         public KnockoutBindingApplier InScope(string scope)
         {
             this._Scope = scope;
@@ -94,7 +91,7 @@ namespace PerpetuumSoft.Knockout.Html
             var encodedArguments = new List<string>();
             if (this.Model != null)
             {
-                encodedArguments.Add(JsonConvert.SerializeObject(this.Model, Formatting.None, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                encodedArguments.Add(Serialize(this.Model));
             }
             //if (this._ModelMetadata != null && this._ModelMetadata.Count() > 0)
             //{
@@ -103,7 +100,7 @@ namespace PerpetuumSoft.Knockout.Html
             //}
             foreach (var arg in this._AdditionalParameters)
             {
-                encodedArguments.Add(JsonConvert.SerializeObject(arg));
+                encodedArguments.Add(Serialize(arg));
             }
             var var = patron.FormatWith(GetVariableName(), GetFunction(), string.Join(",", encodedArguments.ToArray()), GetScope());
             var = this._Later ? later.FormatWith(var) : var;
