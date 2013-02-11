@@ -21,10 +21,17 @@ namespace PerpetuumSoft.Knockout.Html
 
         protected override void ConfigureBinding(KnockoutTagBuilder<TModel> tagBuilder)
         {
-            var metadata = (IDatePickerConfig)this.Metadata.FirstOrDefault(m => m.GetType().GetInterfaces().Any(p => p == typeof(IDatePickerConfig)));
-            if (metadata != null)
+            if (this.Metadata != null)
             {
-                tagBuilder.DatePicker(Binding, metadata);
+                var metadata = (IDatePickerConfig)this.Metadata.FirstOrDefault(m => m.GetType().GetInterfaces().Any(p => p == typeof(IDatePickerConfig)));
+                if (metadata != null)
+                {
+                    tagBuilder.DatePicker(Binding, metadata);
+                }
+                else
+                {
+                    tagBuilder.DatePicker(Binding);
+                }
             }
             else
             {

@@ -96,6 +96,7 @@
     <Compile Include="Html\KnockoutFormElements\KnockoutPassword.cs" />
     <Compile Include="Html\KnockoutFormElements\KnockoutTextArea.cs" />
     <Compile Include="Html\KnockoutFormElements\KnockoutTextBox.cs" />
+    <Compile Include="Html\KnockoutFormElements\KnockoutTimePicker.cs" />
     <Compile Include="Html\KnockoutHtmlElements\Base\KnockoutHtmlTagBase.cs" />
     <Compile Include="Html\KnockoutFormElements\KnockoutLabel.cs" />
     <Compile Include="SubContexts\KnockoutCommonRegionContext.cs" />

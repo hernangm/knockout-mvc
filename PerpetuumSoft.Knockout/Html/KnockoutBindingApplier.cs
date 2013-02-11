@@ -17,7 +17,6 @@ namespace PerpetuumSoft.Knockout.Html
         private static string later = "$(function() {{ {0} }})</script>";
         private ViewContext ViewContext { get; set; }
         public object Model { get; private set; }
-        //private IEnumerable<ModelMetadata> _ModelMetadata { get; set; }
         private string _VariableName { get; set; }
         private string _To { get; set; }
         private string _Scope { get; set; }
@@ -29,13 +28,13 @@ namespace PerpetuumSoft.Knockout.Html
 
             this.ViewContext = context;
             this.Model = this.ViewContext.ViewData.Model;
-            //this._ModelMetadata = this.ViewContext.ViewData.ModelMetadata.Properties;
             this._AdditionalParameters = new List<object>();
         }
 
         private string Serialize(object obj)
         {
-            return JsonConvert.SerializeObject(obj, Formatting.None, new JsonSerializerSettings {
+            return JsonConvert.SerializeObject(obj, Formatting.None, new JsonSerializerSettings
+            {
                 DateFormatHandling = DateFormatHandling.IsoDateFormat,
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
@@ -93,11 +92,6 @@ namespace PerpetuumSoft.Knockout.Html
             {
                 encodedArguments.Add(Serialize(this.Model));
             }
-            //if (this._ModelMetadata != null && this._ModelMetadata.Count() > 0)
-            //{
-            //    //var serializedMetadata = MetadataSerializer.Serialize(this._ModelMetadata);
-            //    //encodedArguments.Add(JsonConvert.SerializeObject(serializedMetadata, Formatting.None, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
-            //}
             foreach (var arg in this._AdditionalParameters)
             {
                 encodedArguments.Add(Serialize(arg));
@@ -127,4 +121,6 @@ namespace PerpetuumSoft.Knockout.Html
             return !string.IsNullOrEmpty(this._Scope) ? ",document.getElementById('{0}')".FormatWith(this._Scope) : string.Empty;
         }
     }
+
+
 }
