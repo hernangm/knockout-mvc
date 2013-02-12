@@ -22,7 +22,8 @@ namespace PerpetuumSoft.Knockout.Html
 
         protected override void ConfigureBinding(KnockoutTagBuilder<TModel> tagBuilder)
         {
-            base.ConfigureBinding(tagBuilder);
+            //todo: revisar
+            //base.ConfigureBinding(tagBuilder);
             Func<IPropertyConfig, bool> func = m => m.GetType().GetInterfaces().Any(p => p == typeof(IKnockoutExtendedObservableConfig));
             if (this.Metadata != null && this.Metadata.Any(func))
             {

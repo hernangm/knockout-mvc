@@ -81,6 +81,7 @@
     <Compile Include="Extensions\KnockoutHtmlExtensions.cs" />
     <Compile Include="Extensions\KnockoutHtmlHelperExtensions.cs" />
     <Compile Include="Html\KnockoutBindingApplier.cs" />
+    <Compile Include="Html\KnockoutFormElements\KnockoutNumericBox.cs" />
     <Compile Include="Html\KnockoutFormElements\Base\KnockoutSelectBase.cs" />
     <Compile Include="Html\KnockoutFormElements\Base\KnockoutTextInputBase.cs" />
     <Compile Include="Html\KnockoutFormElements\Base\KnockoutFieldBase.cs" />
