@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Linq.Expressions;
+using eqip.metadata.Configurations;
 
-namespace PerpetuumSoft.Knockout.Html.KnockoutHtmlElements
+namespace PerpetuumSoft.Knockout.Html
 {
-    public class KnockoutSpan<TModel> : KnockoutHtmlTagBase<KnockoutSpan<TModel>,TModel>
+    public class KnockoutSpan<TModel> : KnockoutHtmlTagBase<KnockoutSpan<TModel>, TModel, object>
     {
-        
-        public KnockoutSpan(KnockoutContext<TModel> context, Expression<Func<TModel, object>> binding, string[] instancesNames = null, Dictionary<string, string> aliases = null)
+
+        public KnockoutSpan(KnockoutContext<TModel> context, Expression<Func<TModel, object>> binding, IEnumerable<IPropertyConfig> metadata = null, string[] instancesNames = null, Dictionary<string, string> aliases = null)
             : base(context, binding, instancesNames, aliases)
         {
         }
@@ -19,5 +20,13 @@ namespace PerpetuumSoft.Knockout.Html.KnockoutHtmlElements
             tagBuilder.Text(Binding);
         }
 
+        public override string ToHtmlString()
+        {
+            var tagBuilder = new KnockoutTagBuilder<TModel>(Context, "span", InstanceNames, Aliases);
+            tagBuilder.ApplyAttributes(this.HtmlAttributes);
+            this.ConfigureTagBuilder(tagBuilder);
+            this.ConfigureBinding(tagBuilder);
+            return tagBuilder.ToHtmlString();
+        }
     }
 }

@@ -29,14 +29,17 @@ namespace PerpetuumSoft.Knockout.Html
 
         protected override void ConfigureBinding(KnockoutTagBuilder<TModel> tagBuilder)
         {
-            var first = (IListSourceConfig)this.Metadata.FirstOrDefault(m => m.GetType().GetInterfaces().Any(p => p == typeof(IListSourceConfig)));
-            if (first != null)
+            if (this.Metadata != null)
             {
-                var propertyName = KnockoutExpressionConverter.Convert(Binding, null);
-                propertyName += "." + first.Name;
-                tagBuilder.Custom("options", propertyName, false);
-                tagBuilder.OptionsText(first.OptionsText, true);
-                tagBuilder.OptionsValue(first.OptionsValue, true);
+                var first = (IListSourceConfig)this.Metadata.FirstOrDefault(m => m.GetType().GetInterfaces().Any(p => p == typeof(IListSourceConfig)));
+                if (first != null)
+                {
+                    var propertyName = KnockoutExpressionConverter.Convert(Binding, null);
+                    propertyName += "." + first.Name;
+                    tagBuilder.Custom("options", propertyName, false);
+                    tagBuilder.OptionsText(first.OptionsText, true);
+                    tagBuilder.OptionsValue(first.OptionsValue, true);
+                }
             }
             else
             {

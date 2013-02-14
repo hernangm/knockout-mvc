@@ -77,6 +77,13 @@ namespace PerpetuumSoft.Knockout
         }
         #endregion
 
+        #region SpanFor
+        public static KnockoutSpan<TModel> SpanFor<TModel>(this KnockoutHtml<TModel> html, Expression<Func<TModel, object>> binding)
+        {
+            return new KnockoutSpan<TModel>(html.Context, binding, GetMetaDataFor(binding), html.Context.CreateData().InstanceNames, html.Context.CreateData().Aliases);
+        }
+        #endregion
+
         private static IEnumerable<IPropertyConfig> GetMetaDataFor<TProperty, TItem>(Expression<Func<TProperty, TItem>> binding)
         {
             var ViewModelConfiguratorFactory = DependencyResolver.Current.GetService<IViewModelConfiguratorFactory>();
