@@ -84,27 +84,42 @@ namespace PerpetuumSoft.Knockout.Html
 
         protected override void ConfigureTagBuilder(KnockoutTagBuilder<TModel> tagBuilder)
         {
-            base.ConfigureTagBuilder(tagBuilder);
             this.HtmlAttributes.Add("id", this.GetId());
         }
 
         public override string ToHtmlString()
         {
-            var tagBuilder = GetTagBuilder();
+            var result = GetTagBuilder().ToHtmlString();
+            result = AddTooltip(result);
+            result = AddLabel(result);
+            return result;
+        }
+
+        private string AddTooltip(string result)
+        {
+            if (Metadata == null || !this.Metadata.Any(m => m.GetType().GetInterfaces().Any(p => p == typeof(ITooltipConfig))))
+            {
+                return result;
+            }
+            return result + new KnockoutTooltip<TModel,TItem>(Context, Binding, Metadata, InstanceNames, Aliases).ToHtmlString();
+        }
+
+        private string AddLabel(string result)
+        {
             if (this.Label.MustShow)
             {
                 if (this.Label.WrappingLabel)
                 {
-                    return string.Format(this.Label.ToHtmlString(), tagBuilder.ToHtmlString());
+                    return string.Format(this.Label.ToHtmlString(), result);
                 }
                 else
                 {
-                    return this.Label.ToHtmlString() + tagBuilder.ToHtmlString();
+                    return this.Label.ToHtmlString() + result;
                 }
             }
             else
             {
-                return tagBuilder.ToHtmlString();
+                return result;
             }
         }
 

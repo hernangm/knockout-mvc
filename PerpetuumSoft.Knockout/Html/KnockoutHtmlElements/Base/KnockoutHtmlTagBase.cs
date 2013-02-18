@@ -81,16 +81,17 @@ namespace PerpetuumSoft.Knockout.Html
         {
             var tagBuilder = new KnockoutTagBuilder<TModel>(Context, this.TagName, InstanceNames, Aliases);
             ConfigureTagBuilder(tagBuilder);
-            tagBuilder.ApplyAttributes(this.HtmlAttributes);
             ConfigureBinding(tagBuilder);
+            tagBuilder.ApplyAttributes(this.HtmlAttributes);
             return tagBuilder;
         }
 
         #region Abstract Methods
         protected abstract void ConfigureBinding(KnockoutTagBuilder<TModel> tagBuilder);
+        protected abstract void ConfigureTagBuilder(KnockoutTagBuilder<TModel> tagBuilder);
         #endregion
 
-        protected virtual void ConfigureTagBuilder(KnockoutTagBuilder<TModel> tagBuilder) { }
+
 
     }
 }

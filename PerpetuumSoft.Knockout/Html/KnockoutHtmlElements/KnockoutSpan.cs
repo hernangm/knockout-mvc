@@ -24,5 +24,10 @@ namespace PerpetuumSoft.Knockout.Html
         {
             return GetTagBuilder().ToHtmlString();
         }
+
+        protected override void ConfigureTagBuilder(KnockoutTagBuilder<TModel> tagBuilder)
+        {
+        
+        }
     }
 }

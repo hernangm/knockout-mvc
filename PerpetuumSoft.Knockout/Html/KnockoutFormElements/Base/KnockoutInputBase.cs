@@ -22,8 +22,9 @@ namespace PerpetuumSoft.Knockout.Html
 
         protected override void ConfigureTagBuilder(KnockoutTagBuilder<TModel> tagBuilder)
         {
+            base.ConfigureTagBuilder(tagBuilder);
+            this.HtmlAttributes.Add("type", this.InputType.ToString().ToLowerInvariant());
             tagBuilder.TagRenderMode = TagRenderMode.SelfClosing;
-            tagBuilder.ApplyAttributes(new { type = this.InputType.ToString().ToLowerInvariant() });
         }
 
         protected override void ConfigureBinding(KnockoutTagBuilder<TModel> tagBuilder)

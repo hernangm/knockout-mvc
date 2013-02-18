@@ -36,7 +36,6 @@ namespace PerpetuumSoft.Knockout.Html
         }
         protected override void ConfigureTagBuilder(KnockoutTagBuilder<TModel> tagBuilder)
         {
-            base.ConfigureTagBuilder(tagBuilder);
             if (!this.HtmlAttributes.ContainsKey("action"))
             {
                 this.HtmlAttributes.Add("action", this.Action);

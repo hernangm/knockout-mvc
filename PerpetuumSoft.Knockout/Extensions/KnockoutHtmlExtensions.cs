@@ -117,7 +117,7 @@ namespace PerpetuumSoft.Knockout
             if (metadata != null)
             {
                 var name = KnockoutExpressionConverter.Convert(binding, null);
-                return metadata.CreateDescriptor().GetConfigsForMember(name);
+                return metadata.CreateDescriptor().GetConfigsForMember(name).ToList();
             }
             return null;
         }

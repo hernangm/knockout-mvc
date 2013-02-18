@@ -22,10 +22,10 @@ namespace PerpetuumSoft.Knockout.Html
 
         protected override void ConfigureBinding(KnockoutTagBuilder<TModel> tagBuilder)
         {
-            Func<IPropertyConfig, bool> func = m => m.GetType().GetInterfaces().Any(p => p == typeof(IKnockoutExtendedObservableConfig));
+            Func<IPropertyConfig, bool> func = m => m.GetType().GetInterfaces().Any(p => p == typeof(IFormatConfig));
             if (this.Metadata != null && this.Metadata.Any(func))
             {
-                var first = (IKnockoutExtendedObservableConfig)this.Metadata.First(func);
+                var first = (IFormatConfig)this.Metadata.First(func);
                 var propertyName = KnockoutExpressionConverter.Convert(Binding, null) + "." + first.Name;
                 tagBuilder.Custom("value", propertyName, false);
             }

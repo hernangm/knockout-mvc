@@ -109,6 +109,7 @@
     <Compile Include="Html\KnockoutHtmlElements\Base\KnockoutHtmlTagBase.cs" />
     <Compile Include="Html\KnockoutFormElements\FormStructure\KnockoutLabel.cs" />
     <Compile Include="Html\KnockoutHtmlElements\KnockoutSpan.cs" />
+    <Compile Include="Html\KnockoutHtmlElements\KnockoutTooltip.cs" />
     <Compile Include="Html\KnockoutHtmlElements\KnockoutValidationSummary.cs" />
     <Compile Include="SubContexts\KnockoutCommonRegionContext.cs" />
     <Compile Include="SubContexts\KnockoutIfContext.cs" />
