@@ -43,9 +43,9 @@ namespace PerpetuumSoft.Knockout.Html
 
         #region Constructors
         public KnockoutFieldBase(KnockoutContext<TModel> context, FieldType type, Expression<Func<TModel, TItem>> binding, IEnumerable<IPropertyConfig> metadata = null, string[] instancesNames = null, Dictionary<string, string> aliases = null)
-            : base(context, binding, instancesNames, aliases)
+            : base(type.ToString().ToLowerInvariant(), context, binding, instancesNames, aliases)
         {
-            this.Type = type;
+            //this.Type = type;
             this.Metadata = metadata;
             this.Label = new KnockoutLabel(this, metadata);
             this.Name = KnockoutExpressionConverter.Convert(Binding, null);
@@ -82,13 +82,19 @@ namespace PerpetuumSoft.Knockout.Html
         }
         #endregion
 
+        protected override void ConfigureTagBuilder(KnockoutTagBuilder<TModel> tagBuilder)
+        {
+            base.ConfigureTagBuilder(tagBuilder);
+            this.HtmlAttributes.Add("id", this.GetId());
+        }
+
         public override string ToHtmlString()
         {
-            var tagBuilder = new KnockoutTagBuilder<TModel>(Context, this.Type.ToString().ToLowerInvariant(), InstanceNames, Aliases);
-            this.HtmlAttributes.Add("id", this.GetId());
-            tagBuilder.ApplyAttributes(this.HtmlAttributes);
-            this.ConfigureTagBuilder(tagBuilder);
-            this.ConfigureBinding(tagBuilder);
+            var tagBuilder = GetTagBuilder();
+
+
+            //this.ConfigureTagBuilder(tagBuilder);
+            //this.ConfigureBinding(tagBuilder);
             if (this.Label.MustShow)
             {
                 if (this.Label.WrappingLabel)

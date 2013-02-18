@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Linq.Expressions;
+using System.Web.Mvc;
 
 namespace PerpetuumSoft.Knockout.Html
 {
@@ -23,7 +24,7 @@ namespace PerpetuumSoft.Knockout.Html
             return this;
         }
 
-        public KnockoutFormBuilder<TModel> Method(string method)
+        public KnockoutFormBuilder<TModel> Method(FormMethod method)
         {
             Form.Method = method;
             return this;

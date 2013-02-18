@@ -11,6 +11,10 @@ namespace PerpetuumSoft.Knockout.Html
         private List<KnockoutField> Fields { get; set; }
         private string Legend { get; set; }
 
+        public KnockoutFieldset()
+        {
+            this.Fields = new List<KnockoutField>();
+        }
 
         public override string ToHtmlString()
         {

@@ -61,18 +61,29 @@ namespace PerpetuumSoft.Knockout.Html
     public abstract class KnockoutHtmlTagBase<TType, TModel, TItem> : KnockoutHtmlTagBase<TType> where TType : KnockoutHtmlTagBase<TType, TModel, TItem>
     {
         #region "Properties"
+        private string TagName { get; set; }
         protected Expression<Func<TModel, TItem>> Binding { get; set; }
         protected KnockoutContext<TModel> Context { get; set; }
         protected string[] InstanceNames { get; set; }
         protected Dictionary<string, string> Aliases { get; set; }
         #endregion
 
-        public KnockoutHtmlTagBase(KnockoutContext<TModel> context, Expression<Func<TModel, TItem>> binding, string[] instancesNames = null, Dictionary<string, string> aliases = null)
+        public KnockoutHtmlTagBase(string tagName, KnockoutContext<TModel> context, Expression<Func<TModel, TItem>> binding, string[] instancesNames = null, Dictionary<string, string> aliases = null)
         {
+            this.TagName = tagName;
             this.Context = context;
             this.InstanceNames = instancesNames;
             this.Aliases = aliases;
             this.Binding = binding;
+        }
+
+        protected KnockoutTagBuilder<TModel> GetTagBuilder()
+        {
+            var tagBuilder = new KnockoutTagBuilder<TModel>(Context, this.TagName, InstanceNames, Aliases);
+            ConfigureTagBuilder(tagBuilder);
+            tagBuilder.ApplyAttributes(this.HtmlAttributes);
+            ConfigureBinding(tagBuilder);
+            return tagBuilder;
         }
 
         #region Abstract Methods

@@ -11,7 +11,7 @@ namespace PerpetuumSoft.Knockout.Html
     {
 
         public KnockoutSpan(KnockoutContext<TModel> context, Expression<Func<TModel, object>> binding, IEnumerable<IPropertyConfig> metadata = null, string[] instancesNames = null, Dictionary<string, string> aliases = null)
-            : base(context, binding, instancesNames, aliases)
+            : base("span", context, binding, instancesNames, aliases)
         {
         }
 
@@ -22,11 +22,7 @@ namespace PerpetuumSoft.Knockout.Html
 
         public override string ToHtmlString()
         {
-            var tagBuilder = new KnockoutTagBuilder<TModel>(Context, "span", InstanceNames, Aliases);
-            tagBuilder.ApplyAttributes(this.HtmlAttributes);
-            this.ConfigureTagBuilder(tagBuilder);
-            this.ConfigureBinding(tagBuilder);
-            return tagBuilder.ToHtmlString();
+            return GetTagBuilder().ToHtmlString();
         }
     }
 }
