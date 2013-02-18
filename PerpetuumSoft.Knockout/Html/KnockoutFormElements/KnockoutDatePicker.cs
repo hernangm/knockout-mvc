@@ -17,6 +17,7 @@ namespace PerpetuumSoft.Knockout.Html
         public KnockoutDatePicker(KnockoutContext<TModel> context, Expression<Func<TModel, object>> binding, IEnumerable<IPropertyConfig> metadata = null, string[] instancesNames = null, Dictionary<string, string> aliases = null)
             : base(context, InputType.Text, binding, metadata, instancesNames, aliases)
         {
+            this.HtmlAttributes.Add("autocomplete", "off");
         }
 
         protected override void ConfigureBinding(KnockoutTagBuilder<TModel> tagBuilder)

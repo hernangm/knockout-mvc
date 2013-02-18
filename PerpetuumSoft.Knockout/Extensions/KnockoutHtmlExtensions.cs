@@ -14,6 +14,13 @@ namespace PerpetuumSoft.Knockout
     public static class KnockoutHtmlExtensions
     {
 
+        #region Form
+        public static KnockoutFormBuilder<TModel> Form<TModel>(this KnockoutHtml<TModel> html)
+        {
+            return new KnockoutFormBuilder<TModel>(new KnockoutForm<TModel>(html.Context, null, null, html.Context.CreateData().InstanceNames, html.Context.CreateData().Aliases));
+        }
+        #endregion
+
         #region TextBoxFor
         public static KnockoutTextBox<TProperty> TextBoxFor<TProperty>(this KnockoutHtml<TProperty> html, Expression<Func<TProperty, object>> binding)
         {
@@ -74,6 +81,13 @@ namespace PerpetuumSoft.Knockout
         public static KnockoutCkeditor<TModel> CkeditorFor<TModel>(this KnockoutHtml<TModel> html, Expression<Func<TModel, object>> binding)
         {
             return new KnockoutCkeditor<TModel>(html.Context, binding, GetMetaDataFor(binding), html.Context.CreateData().InstanceNames, html.Context.CreateData().Aliases);
+        }
+        #endregion
+
+        #region ValidationSummary
+        public static KnockoutValidationSummary ValidationSummary<TModel>(this KnockoutHtml<TModel> html)
+        {
+            return new KnockoutValidationSummary();
         }
         #endregion
 

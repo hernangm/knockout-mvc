@@ -9,25 +9,17 @@ using System.Linq.Expressions;
 
 namespace PerpetuumSoft.Knockout.Html
 {
-    public abstract class KnockoutHtmlTagBase<TType, TModel, TItem> : KnockoutBinding<TModel>, IHtmlString where TType : KnockoutHtmlTagBase<TType, TModel, TItem>
+    public abstract class KnockoutHtmlTagBase<TType> : IHtmlString where TType : KnockoutHtmlTagBase<TType>
     {
         #region "Properties"
         protected IDictionary<string, object> HtmlAttributes { get; set; }
-        protected Expression<Func<TModel, TItem>> Binding { get; set; }
         #endregion
 
-        public KnockoutHtmlTagBase(KnockoutContext<TModel> context, Expression<Func<TModel, TItem>> binding, string[] instancesNames = null, Dictionary<string, string> aliases = null)
-            : base(context, instancesNames, aliases)
+
+        public KnockoutHtmlTagBase()
         {
             this.HtmlAttributes = new Dictionary<string, object>();
-            this.Binding = binding;
         }
-
-        #region Abstract Methods
-        protected abstract void ConfigureBinding(KnockoutTagBuilder<TModel> tagBuilder);
-        #endregion
-
-        protected virtual void ConfigureTagBuilder(KnockoutTagBuilder<TModel> tagBuilder) { }
 
         public TType Attributes(object htmlAttributes)
         {
@@ -56,13 +48,38 @@ namespace PerpetuumSoft.Knockout.Html
             return (TType)this;
         }
 
-        public abstract override string ToHtmlString();
+        public abstract string ToHtmlString();
 
         public override string ToString()
         {
             return this.ToHtmlString();
         }
 
+    }
+
+
+    public abstract class KnockoutHtmlTagBase<TType, TModel, TItem> : KnockoutHtmlTagBase<TType> where TType : KnockoutHtmlTagBase<TType, TModel, TItem>
+    {
+        #region "Properties"
+        protected Expression<Func<TModel, TItem>> Binding { get; set; }
+        protected KnockoutContext<TModel> Context { get; set; }
+        protected string[] InstanceNames { get; set; }
+        protected Dictionary<string, string> Aliases { get; set; }
+        #endregion
+
+        public KnockoutHtmlTagBase(KnockoutContext<TModel> context, Expression<Func<TModel, TItem>> binding, string[] instancesNames = null, Dictionary<string, string> aliases = null)
+        {
+            this.Context = context;
+            this.InstanceNames = instancesNames;
+            this.Aliases = aliases;
+            this.Binding = binding;
+        }
+
+        #region Abstract Methods
+        protected abstract void ConfigureBinding(KnockoutTagBuilder<TModel> tagBuilder);
+        #endregion
+
+        protected virtual void ConfigureTagBuilder(KnockoutTagBuilder<TModel> tagBuilder) { }
 
     }
 }
