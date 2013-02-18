@@ -15,7 +15,7 @@ namespace PerpetuumSoft.Knockout.Html
         Select
     }
 
-    public interface IField
+    public interface IField : IHtmlString
     {
         string GetId();
         FieldType Type { get; }
@@ -91,10 +91,6 @@ namespace PerpetuumSoft.Knockout.Html
         public override string ToHtmlString()
         {
             var tagBuilder = GetTagBuilder();
-
-
-            //this.ConfigureTagBuilder(tagBuilder);
-            //this.ConfigureBinding(tagBuilder);
             if (this.Label.MustShow)
             {
                 if (this.Label.WrappingLabel)

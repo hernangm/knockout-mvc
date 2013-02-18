@@ -77,6 +77,7 @@
     <Compile Include="Decorators\KnockoutBaseAttribute.cs" />
     <Compile Include="Decorators\KnockoutComputedAttribute.cs" />
     <Compile Include="Decorators\KnockoutReferenceAttribute.cs" />
+    <Compile Include="Html\KnockoutFormElements\FormStructure\KnockoutButton.cs" />
     <Compile Include="Html\KnockoutFormElements\FormStructure\KnockoutFormBindingExtensions.cs" />
     <Compile Include="Html\KnockoutFormElements\FormStructure\KnockoutFormBuilderExtensions.cs" />
     <Compile Include="Extensions\KnockoutContextExtensions.cs" />

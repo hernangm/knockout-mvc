@@ -16,6 +16,7 @@ namespace PerpetuumSoft.Knockout.Html
         public KnockoutFormBuilder(KnockoutForm<TModel> form)
         {
             this.Form = form;
+            this.Form.Action = new UrlHelper(HttpContext.Current.Request.RequestContext).Action(null);
         }
 
         public KnockoutFormBuilder<TModel> SetAction(string action)
@@ -45,6 +46,19 @@ namespace PerpetuumSoft.Knockout.Html
         public KnockoutFormBuilder<TModel> Validate(KnockoutFormValidationOptions validationOptions)
         {
             Form.ValidationOptions = validationOptions;
+            return this;
+        }
+
+        public KnockoutFormBuilder<TModel> AddFieldset(Action<KnockoutFieldset> f)
+        {
+            var fieldset = new KnockoutFieldset();
+            Form.Fieldsets.Add(fieldset);
+            f.Invoke(fieldset);
+            return this;
+        }
+        public KnockoutFormBuilder<TModel> AddButton(KnockoutButton button)
+        {
+            Form.Buttons.Add(button);
             return this;
         }
 

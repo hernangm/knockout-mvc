@@ -21,6 +21,13 @@ namespace PerpetuumSoft.Knockout
         }
         #endregion
 
+        #region ValidationSummary
+        public static KnockoutValidationSummary ValidationSummary<TModel>(this KnockoutHtml<TModel> html)
+        {
+            return new KnockoutValidationSummary();
+        }
+        #endregion
+
         #region TextBoxFor
         public static KnockoutTextBox<TProperty> TextBoxFor<TProperty>(this KnockoutHtml<TProperty> html, Expression<Func<TProperty, object>> binding)
         {
@@ -84,10 +91,15 @@ namespace PerpetuumSoft.Knockout
         }
         #endregion
 
-        #region ValidationSummary
-        public static KnockoutValidationSummary ValidationSummary<TModel>(this KnockoutHtml<TModel> html)
+        #region Button
+        public static KnockoutButton Button<TModel>(this KnockoutHtml<TModel> html, string label)
         {
-            return new KnockoutValidationSummary();
+            return new KnockoutButton() { Label = label };
+        }
+
+        public static KnockoutButton Button<TModel>(this KnockoutHtml<TModel> html, string label, PerpetuumSoft.Knockout.Html.KnockoutButton.ButtonType type)
+        {
+            return new KnockoutButton() { Label = label, Type = type };
         }
         #endregion
 
